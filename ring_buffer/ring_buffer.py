@@ -11,27 +11,36 @@ class RingBuffer:
   """
 
   def append(self, item):
-    # If the current amount of items is the capacity
-    if self.current == self.capacity:
-      # Delete the oldest item in the buffer
-      self.storage.pop(0)
-      # Decrement the counter by 1
-      self.current -= 1
+    # The list starts as a list of None * capacity, so it starts at the length of capacity
 
+    # If the element in the current counter is None
+      # Remove that element and insert the item in it's position
+      # Increment the counter by 1
+    # Else if current is equal to the capacity
+      # Remove the first item in the list
+      # Place the new item in its position
+    if self.storage[self.current] is None:
+      self.storage.pop(self.current)
+      self.storage.insert(self.current, item)
+      self.current += 1
+    elif self.current == self.capacity:
+      self.storage.pop(0)
       self.storage.insert(0, item)
-      return
-    # Add the new element to the storage
-    self.storage.append(item)
-    # Increment the counter by 1
-    self.current += 1
 
   def get(self):
     # Return everything in the buffer in a list
-    return_array = []
-    for item in self.storage:
-      print(item)
-      if item is not None:
-        return_array.append(item)
+    return_array = list(filter(None, self.storage))
     
     return return_array
     # Does not return any None values that may be there.
+
+
+# buffer = RingBuffer(5)
+# print(f"LINE 39: {len(buffer.storage)}")
+# print(f"LINE 35: {buffer.append('a')} - {buffer.current} - {buffer.storage}")
+# print(f"LINE 36: {buffer.append('b')} - {buffer.current} - {buffer.storage}")
+# print(f"LINE 37: {buffer.append('c')} - {buffer.current} - {buffer.storage}")
+# print(f"LINE 38: {buffer.append('d')} - {buffer.current} - {buffer.storage}")
+# print(buffer.storage)
+# print(f"LINE 45: {len(buffer.storage)}")
+# print(buffer.get())
