@@ -11,7 +11,27 @@ class RingBuffer:
   """
 
   def append(self, item):
-    pass
+    # If the current amount of items is the capacity
+    if self.current == self.capacity:
+      # Delete the oldest item in the buffer
+      self.storage.pop(0)
+      # Decrement the counter by 1
+      self.current -= 1
+
+      self.storage.insert(0, item)
+      return
+    # Add the new element to the storage
+    self.storage.append(item)
+    # Increment the counter by 1
+    self.current += 1
 
   def get(self):
-    pass
+    # Return everything in the buffer in a list
+    return_array = []
+    for item in self.storage:
+      print(item)
+      if item is not None:
+        return_array.append(item)
+    
+    return return_array
+    # Does not return any None values that may be there.
